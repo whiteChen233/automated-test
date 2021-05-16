@@ -1,0 +1,15 @@
+# 应用服务 WEB 访问端口
+server:
+  servlet:
+    context-path: /at
+  port: 8080
+  tomcat:
+    connection-timeout: 30m
+
+# 应用名称
+spring:
+  application:
+    name: automated-test
+
+
+
