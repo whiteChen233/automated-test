@@ -23,6 +23,7 @@
         <module>at-common</module>
         <module>at-api</module>
         <module>at-dao</module>
+        <module>at-core</module>
         <module>at-manager</module>
         <module>at-service</module>
         <module>at-web</module>
@@ -38,6 +39,13 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+
+            <dependency>
+                <groupId>org.seleniumhq.selenium</groupId>
+                <artifactId>selenium-java</artifactId>
+                <version>3.141.59</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
@@ -55,5 +63,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>
