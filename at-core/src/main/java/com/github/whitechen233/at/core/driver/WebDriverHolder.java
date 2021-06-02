@@ -1,6 +1,7 @@
 package com.github.whitechen233.at.core.driver;
 
 import java.time.Duration;
+import java.util.List;
 import java.util.Optional;
 
 import org.openqa.selenium.By;
@@ -40,6 +41,10 @@ public class WebDriverHolder {
 
     public WebElement findElement(String element) {
         return wait.until(driver -> driver.findElement(By.cssSelector(element)));
+    }
+
+    public List<WebElement> findElements(String element) {
+        return wait.until(driver -> driver.findElements(By.cssSelector(element)));
     }
 
     public void open(String url) {
