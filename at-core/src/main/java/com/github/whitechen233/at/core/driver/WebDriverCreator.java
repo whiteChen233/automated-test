@@ -2,6 +2,7 @@ package com.github.whitechen233.at.core.driver;
 
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Function;
 import java.util.logging.Level;
 
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -15,39 +16,42 @@ import org.springframework.core.io.ClassPathResource;
 public class WebDriverCreator {
 
     public static ChromeDriver createChromeDriver() {
-        ChromeDriver cd = null;
-        try {
-            ClassPathResource cpr = new ClassPathResource(WebDriverEnum.CHROME.getDriverPath());
 
-            ChromeDriverService service = new ChromeDriverService.Builder()
-                .usingDriverExecutable(cpr.getFile())
-                .usingAnyFreePort()
-                .build();
 
-            LoggingPreferences logPrefs = new LoggingPreferences();
-            logPrefs.enable(LogType.PERFORMANCE, Level.ALL);
+        ChromeOptions options = new ChromeOptions()
+            .addArguments("--disable-gpu")
+            .addArguments("blink-settings=imagesEnabled=false")
+            .addArguments("--no-sandbox");
 
-            ChromeOptions options = new ChromeOptions()
-                .addArguments("--disable-gpu")
-                .addArguments("blink-settings=imagesEnabled=false")
-                .addArguments("--no-sandbox");
+        LoggingPreferences logPrefs = new LoggingPreferences();
+        logPrefs.enable(LogType.PERFORMANCE, Level.ALL);
+        options.setCapability(CapabilityType.LOGGING_PREFS, logPrefs);
 
-            options.setCapability(CapabilityType.LOGGING_PREFS, logPrefs);
+        Function<ChromeOptions, ChromeDriver> fun = ops -> {
+            try {
+                ClassPathResource cpr = new ClassPathResource(WebDriverEnum.CHROME.getDriverPath());
+                ChromeDriverService service = new ChromeDriverService.Builder()
+                    .usingDriverExecutable(cpr.getFile())
+                    .usingAnyFreePort()
+                    .build();
 
-            ChromeDriver.class.getConstructor(ChromeDriverService.class, ChromeOptions.class)
-                .newInstance(service, options);
-            cd = new ChromeDriver(service, options);
-            cd.manage().window().maximize();
-            cd.manage().deleteAllCookies();
+                ChromeDriver cd = new ChromeDriver(service, ops);
+                cd.manage().window().maximize();
+                cd.manage().deleteAllCookies();
 
-            cd.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        } catch (Exception e) {
+                cd.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
 
-        }
+                return cd;
+            } catch (Exception e) {
 
-        return Optional.ofNullable(cd).orElseGet(() -> {
-            ChromeDriver tmp = new ChromeDriver();
-            return tmp;
+            }
+            return null;
+        };
+
+        return Optional.ofNullable(fun.apply(options)).orElseGet(() -> {
+            System
+                .setProperty("webdriver.chrome.driver", "src\\main\\java\\resources\\drivers\\win32\\chromedriver.exe");
+            return new ChromeDriver(options);
         });
     }
 }
