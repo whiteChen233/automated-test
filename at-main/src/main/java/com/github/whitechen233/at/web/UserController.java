@@ -1,11 +1,11 @@
 //package com.github.whitechen233.at.web;
 //
-//import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.beans.factory.com.github.whitechen233.at.common.annotation.Autowired;
 //import org.springframework.stereotype.Component;
-//import org.springframework.web.bind.annotation.RequestMapping;
-//import org.springframework.web.bind.annotation.RequestParam;
-//import org.springframework.web.bind.annotation.ResponseBody;
-//import org.springframework.web.bind.annotation.RestController;
+//import org.springframework.web.bind.com.github.whitechen233.at.common.annotation.RequestMapping;
+//import org.springframework.web.bind.com.github.whitechen233.at.common.annotation.RequestParam;
+//import org.springframework.web.bind.com.github.whitechen233.at.common.annotation.ResponseBody;
+//import org.springframework.web.bind.com.github.whitechen233.at.common.annotation.RestController;
 //
 //import com.github.whitechen233.at.api.repository.UserService;
 //import com.github.whitechen233.at.api.domain.UserModel;
