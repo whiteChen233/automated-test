@@ -27,6 +27,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+            // 禁用CSRF 因为你使用session
+            .csrf().disable()
             .authorizeRequests()
             .antMatchers("/security/echo").permitAll()
             .antMatchers("/security/admin").hasRole("ADMIN")
