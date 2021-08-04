@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>com.github.whitechen233</groupId>
+        <groupId>com.github.white</groupId>
         <artifactId>automated-test</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
@@ -15,7 +15,7 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.github.whitechen233</groupId>
+            <groupId>com.github.white</groupId>
             <artifactId>at-framework</artifactId>
         </dependency>
     </dependencies>
