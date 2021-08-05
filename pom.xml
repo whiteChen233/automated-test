@@ -22,12 +22,10 @@
     </properties>
 
     <modules>
-        <module>at-api</module>
-        <module>at-common</module>
-        <module>at-framework</module>
-        <module>at-service</module>
-        <module>at-main</module>
         <module>at-dao</module>
+        <module>at-api</module>
+        <module>at-framework</module>
+        <module>at-main</module>
     </modules>
 
     <dependencyManagement>
@@ -40,16 +38,6 @@
             <dependency>
                 <groupId>com.github.white</groupId>
                 <artifactId>at-api</artifactId>
-                <version>0.0.1-SNAPSHOT</version>
-            </dependency>
-            <dependency>
-                <groupId>com.github.white</groupId>
-                <artifactId>at-service</artifactId>
-                <version>0.0.1-SNAPSHOT</version>
-            </dependency>
-            <dependency>
-                <groupId>com.github.white</groupId>
-                <artifactId>at-common</artifactId>
                 <version>0.0.1-SNAPSHOT</version>
             </dependency>
             <dependency>
@@ -67,9 +55,31 @@
             </dependency>
 
             <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid-spring-boot-starter</artifactId>
+                <version>1.2.6</version>
+            </dependency>
+
+            <dependency>
                 <groupId>org.seleniumhq.selenium</groupId>
                 <artifactId>selenium-java</artifactId>
                 <version>3.141.59</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt-api</artifactId>
+                <version>0.11.2</version>
+            </dependency>
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt-impl</artifactId>
+                <version>0.11.2</version>
+            </dependency>
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt-jackson</artifactId>
+                <version>0.11.2</version>
             </dependency>
 
         </dependencies>

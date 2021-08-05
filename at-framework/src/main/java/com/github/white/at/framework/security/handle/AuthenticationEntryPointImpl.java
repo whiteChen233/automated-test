@@ -8,7 +8,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
 
-import com.github.white.at.common.core.domain.ApiResult;
+import com.github.white.at.framework.core.domain.ApiResult;
 
 /**
  * AuthenticationEntryPointImpl: The type Authentication entry point.

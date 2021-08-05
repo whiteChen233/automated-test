@@ -10,3 +10,61 @@ server:
 spring:
   application:
     name: automated-test
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driverClassName: org.postgresql.Driver
+    druid:
+      url: jdbc:postgresql://localhost:5432/autotest
+      username: autotest
+      password: autotest@127
+      # 初始连接数
+      initialSize: 5
+      # 最小连接池数量
+      minIdle: 10
+      # 最大连接池数量
+      maxActive: 20
+      # 配置获取连接等待超时的时间
+      maxWait: 60000
+      # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+      timeBetweenEvictionRunsMillis: 60000
+      # 配置一个连接在池中最小生存的时间，单位是毫秒
+      minEvictableIdleTimeMillis: 300000
+      # 配置一个连接在池中最大生存的时间，单位是毫秒
+      maxEvictableIdleTimeMillis: 900000
+      # 配置检测连接是否有效
+      validationQuery: SELECT 1
+      testWhileIdle: true
+      testOnBorrow: false
+      testOnReturn: false
+      webStatFilter:
+        enabled: true
+      statViewServlet:
+        enabled: true
+        # 设置白名单，不填则允许所有访问
+        allow:
+        url-pattern: /druid/*
+        # 控制台管理用户名和密码
+        login-username: autotest
+        login-password: 123456
+      filter:
+        stat:
+          enabled: true
+          # 慢SQL记录
+          log-slow-sql: true
+          slow-sql-millis: 1000
+          merge-sql: true
+        wall:
+          config:
+            multi-statement-allow: true
+  redis:
+    host: localhost
+    port: 6379
+    password: redis@127
+
+#jwt
+jwt:
+  header: Authorization
+  # 令牌前缀
+  token-prefix: Bearer
+  # 使用Base64对该令牌进行编码
+  base64-secret: a2pha3Y4MGs5NXZ1ajhjaG1lZjlxZjhwZ3k1ZGk2Mmhuc3ppZnRra3A4NWszeDlmeXgybXE4bGh1czZmZHNyZ2xnbXd2czFkM3RxeG5ja3l5MXFyOWFpNg=

@@ -15,8 +15,8 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
+            <groupId>com.github.white</groupId>
+            <artifactId>at-framework</artifactId>
         </dependency>
     </dependencies>
 </project>

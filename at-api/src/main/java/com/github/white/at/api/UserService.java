@@ -1,11 +1,8 @@
 package com.github.white.at.api;
 
 
-import com.github.white.at.api.domain.UserDTO;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
-public interface UserService {
+public interface UserService extends UserDetailsService {
 
-    String getUserName(Long id);
-
-    UserDTO addUser(UserDTO user);
 }
