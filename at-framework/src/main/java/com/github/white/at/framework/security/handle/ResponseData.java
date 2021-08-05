@@ -5,7 +5,7 @@ import java.io.Serializable;
 
 import javax.servlet.http.HttpServletResponse;
 
-import com.github.white.at.common.core.domain.ApiResult;
+import com.github.white.at.framework.core.domain.ApiResult;
 
 /**
  * ResponseData: The interface Response data.

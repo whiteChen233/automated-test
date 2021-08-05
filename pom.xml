@@ -22,12 +22,10 @@
     </properties>
 
     <modules>
-        <module>at-api</module>
-        <module>at-common</module>
-        <module>at-framework</module>
-        <module>at-service</module>
-        <module>at-main</module>
         <module>at-dao</module>
+        <module>at-api</module>
+        <module>at-framework</module>
+        <module>at-main</module>
     </modules>
 
     <dependencyManagement>
@@ -40,16 +38,6 @@
             <dependency>
                 <groupId>com.github.white</groupId>
                 <artifactId>at-api</artifactId>
-                <version>0.0.1-SNAPSHOT</version>
-            </dependency>
-            <dependency>
-                <groupId>com.github.white</groupId>
-                <artifactId>at-service</artifactId>
-                <version>0.0.1-SNAPSHOT</version>
-            </dependency>
-            <dependency>
-                <groupId>com.github.white</groupId>
-                <artifactId>at-common</artifactId>
                 <version>0.0.1-SNAPSHOT</version>
             </dependency>
             <dependency>

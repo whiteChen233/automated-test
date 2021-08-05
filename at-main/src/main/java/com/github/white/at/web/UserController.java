@@ -1,11 +1,11 @@
 //package com.github.white.at.web;
 //
-//import org.springframework.beans.factory.com.github.white.at.common.annotation.Autowired;
+//import org.springframework.beans.factory.com.github.white.at.framework.annotation.Autowired;
 //import org.springframework.stereotype.Component;
-//import org.springframework.web.bind.com.github.white.at.common.annotation.RequestMapping;
-//import org.springframework.web.bind.com.github.white.at.common.annotation.RequestParam;
-//import org.springframework.web.bind.com.github.white.at.common.annotation.ResponseBody;
-//import org.springframework.web.bind.com.github.white.at.common.annotation.RestController;
+//import org.springframework.web.bind.com.github.white.at.framework.annotation.RequestMapping;
+//import org.springframework.web.bind.com.github.white.at.framework.annotation.RequestParam;
+//import org.springframework.web.bind.com.github.white.at.framework.annotation.ResponseBody;
+//import org.springframework.web.bind.com.github.white.at.framework.annotation.RestController;
 //
 //import com.github.white.at.api.UserService;
 //import com.github.white.at.api.domain.UserModel;
