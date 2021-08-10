@@ -36,7 +36,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter;
 
-    public SecurityConfig(@Qualifier("userService") UserDetailsService userDetailsService,
+    public SecurityConfig(@Qualifier("userServiceImpl") UserDetailsService userDetailsService,
                           AuthenticationEntryPoint authenticationEntryPoint,
                           AccessDeniedHandlerimpl jwtAccessDeniedHandler,
                           LogoutSuccessHandlerImpl logoutSuccessHandler,

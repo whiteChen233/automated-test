@@ -12,6 +12,7 @@ import lombok.Data;
 public class LoginUser implements UserDetails {
 
     private long id;
+    private String account;
     private String username;
     private String passwd;
     private String status;
@@ -31,7 +32,7 @@ public class LoginUser implements UserDetails {
 
     @Override
     public String getUsername() {
-        return null;
+        return username;
     }
 
     @Override
