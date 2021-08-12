@@ -40,7 +40,7 @@
             <plugin>
                 <groupId>org.flywaydb</groupId>
                 <artifactId>flyway-maven-plugin</artifactId>
-                <version>7.12.0</version>
+                <version>7.13.0</version>
                 <configuration>
                     <url></url>
                     <user>autotest</user>
