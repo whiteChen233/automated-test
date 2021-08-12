@@ -9,7 +9,7 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "sys_table")
+@Table(name = "sys_user")
 public class SysUserDO extends AtEntity {
 
     private String username;

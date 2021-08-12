@@ -25,6 +25,7 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${spring-boot.version}</version>
                 <configuration>
                     <mainClass>com.github.white.at.AutomatedTestApplication</mainClass>
                     <layout>ZIP</layout>
@@ -36,23 +37,6 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.flywaydb</groupId>
-                <artifactId>flyway-maven-plugin</artifactId>
-                <version>7.13.0</version>
-                <configuration>
-                    <url></url>
-                    <user>autotest</user>
-                    <password>autotest@127</password>
-                </configuration>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.postgresql</groupId>
-                        <artifactId>postgresql</artifactId>
-                        <version>42.2.23</version>
-                    </dependency>
-                </dependencies>
             </plugin>
         </plugins>
     </build>
