@@ -1,9 +1,12 @@
 <template>
-  <router-view />
+  <v-app-bar>
+
+  </v-app-bar>
 </template>
 
 <script>
 export default {
-  name: 'App'
+  name: 'AppBar'
+
 }
 </script>
