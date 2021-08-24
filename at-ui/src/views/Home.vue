@@ -1,8 +1,7 @@
 <template>
   <div>
-    <hello-world />
     {{ $t('test') }}
-    <v-btn @click="init" >点我</v-btn>
+    <v-btn @click="init">点我</v-btn>
   </div>
 </template>
 
