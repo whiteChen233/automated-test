@@ -24,6 +24,11 @@ const routes = [
         path: '/input/:id',
         name: 'InputId',
         component: () => import('@/views/About.vue')
+      },
+      {
+        path: '/test',
+        name: 'Test',
+        component: () => import('@/views/test')
       }
     ]
   },
