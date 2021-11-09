@@ -54,7 +54,7 @@ export default {
   name: 'Combobox',
   props: {
     // 自定义的属性
-    value: { type: [Array, String] },
+    value: { type: [Array, String, Number] },
     selectAll: { type: Boolean, default: false },
     // 控件原本就有的属性
     items: { type: Array, default: () => [] },
@@ -97,9 +97,9 @@ export default {
     toggle () {
       this.$nextTick(() => {
         if (this.allSelected) {
-          this.selected = []
+          this.input([])
         } else {
-          this.selected = this.items.slice()
+          this.input(this.items.slice())
         }
       })
     },
