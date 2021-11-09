@@ -3,7 +3,7 @@
     app
     dense
   >
-    <v-app-bar-nav-icon @click="drawer = !drawer">
+    <v-app-bar-nav-icon @click="setDrawer(!drawer)">
       <v-icon>mdi-menu</v-icon>
     </v-app-bar-nav-icon>
     <v-tabs
@@ -28,6 +28,7 @@
 </template>
 
 <script>
+import { mapState, mapMutations } from 'vuex'
 export default {
   name: 'AppBar',
   data: () => ({
@@ -41,8 +42,15 @@ export default {
   },
   created () {
     this.tabs.push({ path: '/', title: 'Home' })
+    console.log(this.drawer)
+  },
+  computed: {
+    ...mapState({ drawer: state => state.drawer })
   },
   methods: {
+    ...mapMutations({
+      setDrawer: 'SET_DRAWER'
+    }),
     add (route) {
       const idx = this.tabs.map(i => i.path).indexOf(route.path)
       if (idx < 0) {

@@ -39,7 +39,7 @@ export default {
   name: 'TimePinker',
   model: {
     prop: 'time',
-    event: 'imput'
+    event: 'input'
   },
   props: {
     hour: {
@@ -87,7 +87,7 @@ export default {
       }
       return pre + num
     },
-    handleInput ($event) {
+    handleInput () {
       const val = this.selectHour + ':' + this.selectMinute
       // 通过input标签的原生事件input将值emit出去，以达到值得改变实现双向绑定
       this.$emit('input', val)

@@ -1,6 +1,6 @@
 <template>
   <v-navigation-drawer
-    v-model="drawer"
+    :value="drawer"
     app
   >
     <v-list>
@@ -29,9 +29,9 @@
 <script>
 export default {
   name: 'NavDrawer',
-  data () {
-    return {
-      drawer: null
+  computed: {
+    drawer () {
+      return this.$store.state.drawer
     }
   }
 }
