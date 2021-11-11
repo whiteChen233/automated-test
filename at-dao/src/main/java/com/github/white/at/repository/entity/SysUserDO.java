@@ -1,4 +1,4 @@
-package com.guthub.white.respository.entity;
+package com.github.white.at.repository.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -16,11 +16,11 @@ public class SysUserDO extends AtEntity {
 
     private String password;
 
+    private String nickname;
+
     private Integer status;
 
     private String level;
-
-    private String nickname;
 
     private String gender;
 }

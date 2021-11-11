@@ -19,6 +19,12 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
         <spring-boot.version>2.5.6</spring-boot.version>
+        <flyway.version>8.0.3</flyway.version>
+        <mapstruct.version>1.4.2.Final</mapstruct.version>
+        <druid.version>1.2.8</druid.version>
+        <selenium.version>4.0.0</selenium.version>
+        <jjwt.version>0.11.2</jjwt.version>
+        <hutool.version>5.7.16</hutool.version>
     </properties>
 
     <modules>
@@ -30,6 +36,7 @@
 
     <dependencyManagement>
         <dependencies>
+            <!-- 自有 -->
             <dependency>
                 <groupId>com.github.white</groupId>
                 <artifactId>at-dao</artifactId>
@@ -46,6 +53,7 @@
                 <version>0.0.1-SNAPSHOT</version>
             </dependency>
 
+            <!-- spring boot dependencies 统一管理版本 -->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
@@ -57,38 +65,52 @@
             <dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>druid-spring-boot-starter</artifactId>
-                <version>1.2.8</version>
+                <version>${druid.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>org.seleniumhq.selenium</groupId>
                 <artifactId>selenium-java</artifactId>
-                <version>4.0.0</version>
+                <version>${selenium.version}</version>
             </dependency>
 
+            <!-- jjwt -->
             <dependency>
                 <groupId>io.jsonwebtoken</groupId>
                 <artifactId>jjwt-api</artifactId>
-                <version>0.11.2</version>
+                <version>${jjwt.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.jsonwebtoken</groupId>
                 <artifactId>jjwt-impl</artifactId>
-                <version>0.11.2</version>
+                <version>${jjwt.version}</version>
+                <scope>runtime</scope>
             </dependency>
             <dependency>
                 <groupId>io.jsonwebtoken</groupId>
                 <artifactId>jjwt-jackson</artifactId>
-                <version>0.11.2</version>
+                <version>${jjwt.version}</version>
+                <scope>runtime</scope>
             </dependency>
 
             <!-- https://mvnrepository.com/artifact/org.flywaydb/flyway-core -->
             <dependency>
                 <groupId>org.flywaydb</groupId>
                 <artifactId>flyway-core</artifactId>
-                <version>8.0.3</version>
+                <version>${flyway.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>org.mapstruct</groupId>
+                <artifactId>mapstruct</artifactId>
+                <version>${mapstruct.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-all</artifactId>
+                <version>${hutool.version}</version>
+            </dependency>
 
         </dependencies>
     </dependencyManagement>
@@ -100,9 +122,29 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.1</version>
                 <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                    <encoding>UTF-8</encoding>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                    <annotationProcessorPaths>
+                        <!-- 先经过Lombok处理，再有MapStruct处理，要不然没有Getter/Setter方法 -->
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>1.18.20</version>
+                        </path>
+                        <path>
+                            <groupId>org.mapstruct</groupId>
+                            <artifactId>mapstruct-processor</artifactId>
+                            <version>${mapstruct.version}</version>
+                        </path>
+                    </annotationProcessorPaths>
+                    <showWarnings>true</showWarnings>
+                    <compilerArgs>
+                        <!-- 默认使用spring管理生成的实例 -->
+                        <arg>-Amapstruct.defaultComponentModel=spring</arg>
+                        <!-- 如果映射方法的目标对象属性没有填充源值，将应用默认报告策略 -->
+                        <arg>-Amapstruct.unmappedTargetPolicy=WARN</arg>
+                    </compilerArgs>
                 </configuration>
             </plugin>
         </plugins>

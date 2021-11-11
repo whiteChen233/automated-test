@@ -1,22 +1,34 @@
 package com.github.white.at.api.impl;
 
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.github.white.at.api.UserService;
+import com.github.white.at.api.mapper.SysUserMapper;
+import com.github.white.at.repository.SysUserRepository;
+import com.github.white.at.repository.entity.SysUserDO;
 
 @Service
 public class UserServiceImpl implements UserService {
 
-//    private final UserRespository userRespository;
+    private final SysUserRepository dao;
 
-//    public UserServiceImpl(UserRespository userRespository) {
-//        this.userRespository = userRespository;
-//    }
+    private final SysUserMapper mapper;
+
+    public UserServiceImpl(SysUserRepository dao, SysUserMapper mapper) {
+        this.dao = dao;
+        this.mapper = mapper;
+    }
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        return null;
+        SysUserDO user = new SysUserDO();
+        ExampleMatcher matcher = ExampleMatcher.matching()
+            .withMatcher("username", ExampleMatcher.GenericPropertyMatchers.ignoreCase());
+        Example<SysUserDO> example = Example.of(user, matcher);
+        return mapper.toObject(dao.findOne(example).orElseGet(SysUserDO::new));
     }
 }
