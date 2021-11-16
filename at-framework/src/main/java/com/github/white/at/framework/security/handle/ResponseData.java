@@ -2,8 +2,12 @@ package com.github.white.at.framework.security.handle;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.nio.charset.StandardCharsets;
 
 import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 
 import com.github.white.at.framework.core.domain.ApiResult;
 
@@ -24,9 +28,9 @@ public interface ResponseData extends Serializable {
      */
     default void response(HttpServletResponse response, ApiResult result) {
         try {
-            response.setStatus(200);
-            response.setContentType("application/json");
-            response.setCharacterEncoding("utf-8");
+            response.setStatus(HttpStatus.OK.value());
+            response.setContentType(MediaType.APPLICATION_JSON.toString());
+            response.setCharacterEncoding(StandardCharsets.UTF_8.toString());
             response.getWriter().print(result.toString());
         } catch (IOException e) {
             //

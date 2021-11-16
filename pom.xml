@@ -126,7 +126,7 @@
                     <target>${java.version}</target>
                     <encoding>${project.build.sourceEncoding}</encoding>
                     <annotationProcessorPaths>
-                        <!-- 先经过Lombok处理，再有MapStruct处理，要不然没有Getter/Setter方法 -->
+                        <!-- 先经过Lombok处理，再由MapStruct处理，要不然没有Getter/Setter方法 -->
                         <path>
                             <groupId>org.projectlombok</groupId>
                             <artifactId>lombok</artifactId>
