@@ -18,7 +18,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-        <spring-boot.version>2.5.6</spring-boot.version>
+        <spring-boot.version>2.5.7</spring-boot.version>
         <flyway.version>8.0.4</flyway.version>
         <mapstruct.version>1.4.2.Final</mapstruct.version>
         <druid.version>1.2.8</druid.version>
