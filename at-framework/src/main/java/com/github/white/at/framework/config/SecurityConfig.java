@@ -106,7 +106,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .antMatchers("/druid/**").permitAll()
             // 放行OPTIONS请求
             .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-            .anyRequest().authenticated()
+//            .anyRequest().authenticated()
             .and()
             .formLogin()
             .permitAll()

@@ -14,12 +14,12 @@ import com.github.white.at.repository.entity.SysUserDO;
 @Service
 public class UserServiceImpl implements UserService {
 
-    private final SysUserRepository dao;
+    private final SysUserRepository repository;
 
     private final SysUserMapper mapper;
 
-    public UserServiceImpl(SysUserRepository dao, SysUserMapper mapper) {
-        this.dao = dao;
+    public UserServiceImpl(SysUserRepository repository, SysUserMapper mapper) {
+        this.repository = repository;
         this.mapper = mapper;
     }
 
@@ -29,6 +29,6 @@ public class UserServiceImpl implements UserService {
         ExampleMatcher matcher = ExampleMatcher.matching()
             .withMatcher("username", ExampleMatcher.GenericPropertyMatchers.ignoreCase());
         Example<SysUserDO> example = Example.of(user, matcher);
-        return mapper.toObject(dao.findOne(example).orElseGet(SysUserDO::new));
+        return mapper.toObject(repository.findOne(example).orElseGet(SysUserDO::new));
     }
 }

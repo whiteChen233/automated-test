@@ -1,0 +1,8 @@
+spring:
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    druid:
+      url: jdbc:mysql://localhost:3306/practice?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+      username: practice
+      password: 3306.Practice
+

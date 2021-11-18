@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Java后端WebSocket的Tomcat实现</title>
+</head>
+
+<body>
+<div id="main" style="width: 1200px;height:500px;overflow-x: auto">
+    <div id="message"></div>
+</div>
+<hr/>
+Welcome
+<br/>
+<label for="username"></label><input id="username" type="text">
+<button onclick="create()">加入</button>
+<button onclick="closeWebSocket()">退出</button>
+<hr/>
+<label for="text">发送</label><input id="text" type="text"/>
+<button onclick="send()">发送消息</button>
+</body>
+<script type="text/javascript">
+    let websocket = {};
+
+    // 监听窗口关闭事件，当窗口关闭时，主动去关闭websocket连接，防止连接还没断开就关闭窗口，server端会抛异常。
+    window.onbeforeunload = function () {
+        closeWebSocket();
+    }
+
+    // 将消息显示在网页上
+    function setMessageInnerHTML(s) {
+        if (s instanceof Event) {
+            s = s.data
+        }
+        document.getElementById('message').innerHTML += s + '<br/>';
+    }
+
+    // 关闭WebSocket连接
+    function closeWebSocket() {
+        websocket.close();
+    }
+
+    // 发送消息
+    function send() {
+        const message = document.getElementById('text').value;
+        websocket.send(message);
+        setMessageInnerHTML(message + "&#13;");
+    }
+
+    function create() {
+        // 判断当前浏览器是否支持WebSocket
+        if ('WebSocket' in window) {
+            let ws = "ws://127.0.0.1:8089/at/api/websocket/"
+
+            // 改成你的地址
+            websocket = new WebSocket(ws + document.getElementById("username").value);
+
+            // 连接发生错误的回调方法
+            websocket.onerror = function () {
+                setMessageInnerHTML("WebSocket连接发生错误");
+            };
+
+            // 连接成功建立的回调方法
+            websocket.onopen = function () {
+                setMessageInnerHTML("WebSocket连接成功");
+            }
+            // 接收到消息的回调方法
+            websocket.onmessage = function (event) {
+                console.log(event);
+                setMessageInnerHTML(event);
+            }
+
+            // 连接关闭的回调方法
+            websocket.onclose = function () {
+                setMessageInnerHTML("WebSocket连接关闭");
+            }
+        } else {
+            alert('当前浏览器 Not support websocket')
+        }
+    }
+</script>
+
+</html>
