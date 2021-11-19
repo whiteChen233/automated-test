@@ -1,3 +1,7 @@
+import en from 'vuetify/lib/locale/en'
+
 export default {
-  test: 'test'
+  test: 'test',
+
+  $vuetify: en
 }
