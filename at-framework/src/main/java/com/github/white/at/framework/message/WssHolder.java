@@ -16,14 +16,14 @@ public class WssHolder {
     public void add(WebSocketServer wss) {
         set.add(wss);
         online++;
-        sendMessage(wss, wss.getSid() + " connected");
+        sendMessage(wss, wss.getSid() + " has joined");
         log.info("Connection: {} joined, the current online number is: {}", wss.getSid(), getOnline());
     }
 
     public void sub(WebSocketServer wss) {
         set.remove(wss);
         online--;
-        sendMessage(wss,wss.getSid() + " quit");
+        sendMessage(wss,wss.getSid() + " has left");
         log.info("Connection: {} closed, the current number of people online:{}", wss.getSid(), getOnline());
     }
 
@@ -32,6 +32,7 @@ public class WssHolder {
     }
 
     public void sendMessage(WebSocketServer curr, String s) {
+        log.info("Receive a message from the window {}: {}", curr.getSid(), s);
         set.stream()
             .filter(wss -> !curr.getSid().equals(wss.getSid()))
             .forEach(wss -> {

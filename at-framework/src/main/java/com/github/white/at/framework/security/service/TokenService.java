@@ -9,6 +9,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -41,16 +42,26 @@ public class TokenService implements InitializingBean {
 
     private final JwtProperties jwtProperties;
 
+    private final AuthenticationManager authenticationManager;
+
     private Key key;
 
-    public TokenService(JwtProperties jwtProperties) {
+    public TokenService(JwtProperties jwtProperties,
+                        AuthenticationManager authenticationManager) {
         this.jwtProperties = jwtProperties;
+        this.authenticationManager = authenticationManager;
     }
 
     @Override
     public void afterPropertiesSet() {
         byte[] keyBytes = Decoders.BASE64.decode(jwtProperties.getBase64Secret());
         this.key = Keys.hmacShaKeyFor(keyBytes);
+    }
+
+    public String login(String username, String password) {
+        Authentication authentication = authenticationManager
+            .authenticate(new UsernamePasswordAuthenticationToken(username, password));
+        return createToken((LoginUser) authentication.getPrincipal());
     }
 
     public String createToken(LoginUser loginUser) {
@@ -63,7 +74,7 @@ public class TokenService implements InitializingBean {
             .setId(UUID.randomUUID().toString())
             .setIssuedAt(new Date())
             .compressWith(CompressionCodecs.DEFLATE)
-            .signWith(key, SignatureAlgorithm.ES512)
+            .signWith(key, SignatureAlgorithm.HS512)
             .compact();
     }
 

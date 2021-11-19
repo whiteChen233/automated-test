@@ -103,7 +103,7 @@ spring:
     open-in-view: false
   flyway:
     # 是否启用flyway
-    enabled: false
+    enabled: true
     driver-class-name: ${spring.datasource.driverClassName}
     url: ${spring.datasource.druid.url}
     user: ${spring.datasource.druid.username}

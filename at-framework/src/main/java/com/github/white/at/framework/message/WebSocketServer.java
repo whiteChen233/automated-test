@@ -39,7 +39,6 @@ public class WebSocketServer {
 
     @OnMessage
     public void message(String message, Session session) {
-        log.info("Receive a message from the window {}: {}", sid, message);
         WssHolder.get().sendMessage(this, message);
     }
 
