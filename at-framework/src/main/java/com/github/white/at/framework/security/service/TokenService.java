@@ -16,9 +16,10 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 
+import com.github.white.at.common.exception.BaseException;
+import com.github.white.at.common.response.ResponseCode;
 import com.github.white.at.framework.config.properties.JwtProperties;
 import com.github.white.at.framework.core.domain.LoginUser;
-import com.github.white.at.framework.exception.BaseException;
 import com.google.common.collect.Maps;
 
 import io.jsonwebtoken.Claims;
@@ -46,8 +47,7 @@ public class TokenService implements InitializingBean {
 
     private Key key;
 
-    public TokenService(JwtProperties jwtProperties,
-                        AuthenticationManager authenticationManager) {
+    public TokenService(JwtProperties jwtProperties, AuthenticationManager authenticationManager) {
         this.jwtProperties = jwtProperties;
         this.authenticationManager = authenticationManager;
     }
@@ -66,7 +66,7 @@ public class TokenService implements InitializingBean {
 
     public String createToken(LoginUser loginUser) {
         Map<String, Object> claims = Maps.newHashMap();
-        claims.put("id", loginUser.getId());
+//        claims.put("id", loginUser.getId());
         claims.put("username", loginUser.getUsername());
         claims.put(KEY_AUTHORITIES, loginUser.getAuthorities());
         return Jwts.builder()
@@ -86,7 +86,7 @@ public class TokenService implements InitializingBean {
             .map(SimpleGrantedAuthority::new)
             .collect(Collectors.toList());
 
-        LoginUser principal = new LoginUser();
+        LoginUser principal = null;
         return new UsernamePasswordAuthenticationToken(principal, token, authorities);
     }
 
@@ -106,14 +106,14 @@ public class TokenService implements InitializingBean {
         return false;
     }
 
-    private Jws<Claims> getClaimsFromToken(String token) throws BaseException {
+    private Jws<Claims> getClaimsFromToken(String token) {
         try {
             return Jwts.parserBuilder()
                 .setSigningKey(key)
                 .build()
                 .parseClaimsJws(token);
         } catch (Exception e) {
-            throw new BaseException(e);
+            throw new BaseException(ResponseCode.FAIL.getCode(), "");
         }
     }
 }

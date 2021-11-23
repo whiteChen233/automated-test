@@ -3,7 +3,7 @@ package com.github.white.at.repository.entity;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-import com.github.white.at.framework.base.AtEntity;
+import com.github.white.at.common.basic.AtEntity;
 
 import lombok.Data;
 

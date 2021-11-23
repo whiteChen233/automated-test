@@ -3,6 +3,7 @@ package com.github.white.at.framework.core.domain;
 import java.util.Collection;
 import java.util.List;
 
+import org.springframework.security.core.CredentialsContainer;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -11,15 +12,11 @@ import lombok.Data;
 
 @Builder
 @Data
-public class LoginUser implements UserDetails {
+public class LoginUser<T> implements UserDetails, CredentialsContainer {
 
-    private long id;
-    private String username;
-
+    private T user;
     private List<String> roles;
     private List<String> perms;
-
-    public LoginUser() {}
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -33,7 +30,7 @@ public class LoginUser implements UserDetails {
 
     @Override
     public String getUsername() {
-        return username;
+        return null;
     }
 
     @Override
@@ -54,5 +51,10 @@ public class LoginUser implements UserDetails {
     @Override
     public boolean isEnabled() {
         return false;
+    }
+
+    @Override
+    public void eraseCredentials() {
+
     }
 }

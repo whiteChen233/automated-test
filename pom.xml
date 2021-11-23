@@ -32,6 +32,7 @@
         <module>at-api</module>
         <module>at-framework</module>
         <module>at-main</module>
+        <module>at-common</module>
     </modules>
 
     <profiles>
@@ -68,6 +69,11 @@
             <dependency>
                 <groupId>com.github.white</groupId>
                 <artifactId>at-framework</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.white</groupId>
+                <artifactId>at-common</artifactId>
                 <version>0.0.1-SNAPSHOT</version>
             </dependency>
 

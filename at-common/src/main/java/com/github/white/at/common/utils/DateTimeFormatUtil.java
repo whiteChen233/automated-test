@@ -1,4 +1,4 @@
-package com.github.white.at.framework.utils;
+package com.github.white.at.common.utils;
 
 public final class DateTimeFormatUtil {
 

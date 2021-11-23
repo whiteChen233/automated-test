@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
-import com.github.white.at.framework.core.domain.ApiResult;
+import com.github.white.at.common.response.ApiResult;
 
 /**
  * ResponseData: The interface Response data.

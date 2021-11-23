@@ -1,6 +1,5 @@
 package com.github.white.at.framework.config;
 
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -18,7 +17,7 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.github.white.at.framework.security.filter.JwtAuthenticationTokenFilter;
-import com.github.white.at.framework.security.handle.AccessDeniedHandlerimpl;
+import com.github.white.at.framework.security.handle.AccessDeniedHandlerImpl;
 import com.github.white.at.framework.security.handle.LogoutSuccessHandlerImpl;
 
 
@@ -27,22 +26,18 @@ import com.github.white.at.framework.security.handle.LogoutSuccessHandlerImpl;
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final UserDetailsService userDetailsService;
-
     private final AuthenticationEntryPoint jwtAuthenticationEntryPoint;
 
-    private final AccessDeniedHandlerimpl jwtAccessDeniedHandler;
+    private final AccessDeniedHandlerImpl jwtAccessDeniedHandler;
 
     private final LogoutSuccessHandlerImpl logoutSuccessHandler;
 
     private final JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter;
 
-    public SecurityConfig(@Qualifier("userServiceImpl") UserDetailsService userDetailsService,
-                          AuthenticationEntryPoint authenticationEntryPoint,
-                          AccessDeniedHandlerimpl jwtAccessDeniedHandler,
+    public SecurityConfig(AuthenticationEntryPoint authenticationEntryPoint,
+                          AccessDeniedHandlerImpl jwtAccessDeniedHandler,
                           LogoutSuccessHandlerImpl logoutSuccessHandler,
                           JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter) {
-        this.userDetailsService = userDetailsService;
         this.jwtAuthenticationEntryPoint = authenticationEntryPoint;
         this.jwtAccessDeniedHandler = jwtAccessDeniedHandler;
         this.logoutSuccessHandler = logoutSuccessHandler;
@@ -59,15 +54,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     @Override
+    public UserDetailsService userDetailsServiceBean() throws Exception {
+        return super.userDetailsServiceBean();
+    }
+
+    @Bean
+    @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
 
     @Override
-    protected void configure( AuthenticationManagerBuilder auth) throws Exception {
-        auth
-            .userDetailsService(userDetailsService)
-            .passwordEncoder(passwordEncoder());
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userDetailsServiceBean()).passwordEncoder(passwordEncoder());
     }
 
     @Override
@@ -94,16 +93,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .authorizeRequests()
 
             // 放行静态资源
-            .antMatchers(
-                HttpMethod.GET,
-                "/*.html",
-                "/**/*.html",
-                "/**/*.css",
-                "/**/*.js",
-                "/webSocket/**"
-            ).permitAll()
+            .antMatchers("/*.html", "/**/*.html", "/**/*.css", "/**/*.js", "/webSocket/**").permitAll()
             // 放行swagger
-            .antMatchers("/swagger-ui.html").permitAll()
             .antMatchers("/swagger-resources/**").permitAll()
             .antMatchers("/webjars/**").permitAll()
             .antMatchers("/*/api-docs").permitAll()

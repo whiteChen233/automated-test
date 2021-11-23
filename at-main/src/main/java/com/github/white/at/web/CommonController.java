@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.github.white.at.api.domain.SysUserVO;
-import com.github.white.at.framework.core.domain.ApiResult;
+import com.github.white.at.common.response.ApiResult;
 import com.github.white.at.framework.security.service.TokenService;
 
 @RestController

@@ -8,10 +8,10 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.stereotype.Component;
 
-import com.github.white.at.framework.core.domain.ApiResult;
+import com.github.white.at.common.response.ApiResult;
 
 @Component
-public class AccessDeniedHandlerimpl implements AccessDeniedHandler, ResponseData {
+public class AccessDeniedHandlerImpl implements AccessDeniedHandler, ResponseData {
 
     @Override
     public void handle(HttpServletRequest httpServletRequest,

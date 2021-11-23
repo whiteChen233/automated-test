@@ -1,11 +1,13 @@
-package com.github.white.at.framework.core.domain;
+package com.github.white.at.common.response;
 
 import java.util.HashMap;
 
-import org.springframework.http.HttpStatus;
-
 /**
- * The type Api result.
+ * ApiResult: The type Api result.
+ *
+ * @author White
+ * @version 1.0
+ * @date 2021/11/22 13:56
  */
 public class ApiResult extends HashMap<String, Object> {
 
@@ -46,11 +48,11 @@ public class ApiResult extends HashMap<String, Object> {
     /**
      * Instantiates a new Api result.
      *
-     * @param status the status
-     * @param data   the data
+     * @param responseCode the response code
+     * @param data         the data
      */
-    public ApiResult(HttpStatus status, Object data) {
-        this(status.value(), status.getReasonPhrase(), data);
+    public ApiResult(ResponseCode responseCode, Object data) {
+        this(responseCode.getCode(), responseCode.getKey(), data);
     }
 
     /**
@@ -60,7 +62,7 @@ public class ApiResult extends HashMap<String, Object> {
      * @return the api result
      */
     public static ApiResult ok(Object data) {
-        return new ApiResult(HttpStatus.OK, data);
+        return new ApiResult(ResponseCode.SUCCESS, data);
     }
 
     /**
@@ -89,6 +91,6 @@ public class ApiResult extends HashMap<String, Object> {
      * @return the api result
      */
     public static ApiResult error() {
-        return new ApiResult(HttpStatus.INTERNAL_SERVER_ERROR, null);
+        return new ApiResult(ResponseCode.FAIL, null);
     }
 }

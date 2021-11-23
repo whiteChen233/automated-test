@@ -1,4 +1,4 @@
-package com.github.white.at.framework.base;
+package com.github.white.at.common.basic;
 
 import java.time.LocalDateTime;
 
@@ -10,7 +10,7 @@ import lombok.Data;
 @MappedSuperclass
 public class AtLogEntity {
 
-    private Long id;
+    private long id;
 
     private String createBy;
 

@@ -1,4 +1,4 @@
-package com.github.white.at.framework.base;
+package com.github.white.at.common.basic;
 
 import java.time.LocalDateTime;
 

@@ -1,4 +1,4 @@
-package com.github.white.at.framework.base.enums;
+package com.github.white.at.common.enums;
 
 /**
  * AccountEnum: The enum Account enum.

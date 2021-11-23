@@ -1,7 +1,5 @@
 package com.github.white.at.api.impl;
 
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -25,11 +23,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDetails loadUserByUsername(String s) {
-        SysUserDO user = new SysUserDO();
-        ExampleMatcher matcher = ExampleMatcher.matching()
-            .withMatcher("username", ExampleMatcher.GenericPropertyMatchers.ignoreCase());
-        Example<SysUserDO> example = Example.of(user, matcher);
-        SysUserDO u = repository.findOne(example).orElseGet(SysUserDO::new);
+        SysUserDO u = repository.findOneByUsername(s).orElseGet(SysUserDO::new);
         return LoginUser.builder()
             .id(u.getId())
             .username(u.getUsername())
