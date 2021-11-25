@@ -1,5 +1,7 @@
 package com.github.white.at.common.enums;
 
+import lombok.Getter;
+
 /**
  * AccountEnum: The enum Account enum.
  *
@@ -7,17 +9,21 @@ package com.github.white.at.common.enums;
  * @version 1.0
  * @date 2021 /08/10 下午 10:26
  */
+@Getter
 public enum AccountEnum {
 
     /**
      * Available account enum.
      */
     AVAILABLE(1, "可用"),
-
     /**
      * Disable account enum.
      */
     DISABLE(2, "禁用"),
+    /**
+     * Locked account enum.
+     */
+    LOCKED(3, "锁定"),
 
     ;
 
@@ -39,23 +45,5 @@ public enum AccountEnum {
     AccountEnum(int status, String text) {
         this.status = status;
         this.text = text;
-    }
-
-    /**
-     * Gets status.
-     *
-     * @return the status
-     */
-    public int getStatus() {
-        return status;
-    }
-
-    /**
-     * Gets text.
-     *
-     * @return the text
-     */
-    public String getText() {
-        return text;
     }
 }

@@ -66,7 +66,7 @@ public class TokenService implements InitializingBean {
 
     public String createToken(LoginUser loginUser) {
         Map<String, Object> claims = Maps.newHashMap();
-//        claims.put("id", loginUser.getId());
+        claims.put("id", loginUser.getUserId());
         claims.put("username", loginUser.getUsername());
         claims.put(KEY_AUTHORITIES, loginUser.getAuthorities());
         return Jwts.builder()
@@ -86,7 +86,7 @@ public class TokenService implements InitializingBean {
             .map(SimpleGrantedAuthority::new)
             .collect(Collectors.toList());
 
-        LoginUser principal = null;
+        LoginUser principal = LoginUser.builder().build();
         return new UsernamePasswordAuthenticationToken(principal, token, authorities);
     }
 
