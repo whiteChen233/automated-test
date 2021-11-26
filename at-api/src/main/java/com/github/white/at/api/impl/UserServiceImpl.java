@@ -25,7 +25,7 @@ public class UserServiceImpl implements UserService {
     public UserDetails loadUserByUsername(String s) {
         SysUserDO u = repository.findOneByUsername(s).orElseGet(SysUserDO::new);
         return LoginUser.builder()
-            .id(u.getId())
+            .userId(u.getId())
             .username(u.getUsername())
             .build();
     }
