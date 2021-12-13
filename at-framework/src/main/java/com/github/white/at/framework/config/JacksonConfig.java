@@ -15,7 +15,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
-import com.github.white.at.common.utils.DateTimeFormatUtil;
+import com.github.white.at.common.utils.DateFormatter;
 
 /**
  * JacksonConfig: The type Jackson config.
@@ -44,10 +44,10 @@ public class JacksonConfig {
             // 序列化时的命名策略——驼峰命名法
             builder.propertyNamingStrategy(PropertyNamingStrategies.LOWER_CAMEL_CASE);
             // 针对于Date类型，文本格式化
-            builder.simpleDateFormat(DateTimeFormatUtil.Y4_M2_D2_H2_M2_S2);
+            builder.simpleDateFormat(DateFormatter.Y4_M2_D2_H2_M2_S2.getPattern());
             // 针对于JDK新时间类。序列化时带有T的问题，自定义格式化字符串
             JavaTimeModule javaTimeModule = new JavaTimeModule();
-            DateTimeFormatter pattern = DateTimeFormatter.ofPattern(DateTimeFormatUtil.Y4_M2_D2_H2_M2_S2);
+            DateTimeFormatter pattern = DateFormatter.Y4_M2_D2_H2_M2_S2.get();
             javaTimeModule.addSerializer(LocalDateTime.class, new LocalDateTimeSerializer(pattern));
             javaTimeModule.addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer(pattern));
             builder.modules(javaTimeModule);

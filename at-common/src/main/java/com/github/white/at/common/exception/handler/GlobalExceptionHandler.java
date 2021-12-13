@@ -30,7 +30,7 @@ public class GlobalExceptionHandler {
         final List<FieldError> fieldErrors = result.getFieldErrors();
         StringBuilder builder = new StringBuilder();
         for (FieldError error : fieldErrors) {
-            builder.append(error.getDefaultMessage()).append("\n");
+            builder.append(error.getDefaultMessage()).append(System.lineSeparator());
         }
         return ApiResult.error(ResponseCode.PARAMETER_ERROR.getCode(), builder.toString());
     }
@@ -41,7 +41,7 @@ public class GlobalExceptionHandler {
         response.setStatus(HttpStatus.BAD_REQUEST.value());
         List<ObjectError> errors = ex.getAllErrors();
         StringBuilder errorMsg = new StringBuilder();
-        errors.forEach(x -> errorMsg.append(x.getDefaultMessage()).append("\n"));
+        errors.forEach(x -> errorMsg.append(x.getDefaultMessage()).append(System.lineSeparator()));
         return ApiResult.error(ResponseCode.PARAMETER_ERROR.getCode(), errorMsg.toString());
     }
 }
