@@ -1,6 +1,6 @@
 <template>
   <v-main>
-      <keep-alive>
+      <keep-alive :max="10">
         <router-view />
       </keep-alive>
   </v-main>
