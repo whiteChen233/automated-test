@@ -93,7 +93,7 @@ public class RedisUtil {
      * @param collection 多个对象
      * @return
      */
-    public long deleteObject(final Collection collection) {
+    public long deleteObject(final Collection<String> collection) {
         return redisTemplate.delete(collection);
     }
 
