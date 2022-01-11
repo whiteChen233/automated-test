@@ -17,7 +17,6 @@ import com.github.white.at.common.response.ApiResult;
  * @version 1.0
  * @date 2021/07/13 23:56
  */
-@Component
 public class AuthenticationEntryPointImpl implements AuthenticationEntryPoint, ResponseData {
 
     private static final long serialVersionUID = -1L;

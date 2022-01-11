@@ -7,7 +7,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Supplier;
 
-import org.apache.commons.lang3.StringUtils;
+import org.springframework.util.StringUtils;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JavaType;
@@ -241,19 +241,19 @@ public enum JSON {
     @SuppressWarnings("unchecked")
     private <T> T process(String value, Supplier<T> defaultSupplier, Object arg) {
         try {
-            if (StringUtils.isBlank(value)) {
-                return defaultSupplier.get();
+            if (StringUtils.hasText(value)) {
+                if (arg instanceof Class) {
+                    return mapper.readValue(value, (Class<T>) arg);
+                }
+                if (arg instanceof TypeReference) {
+                    return mapper.readValue(value, (TypeReference<T>) arg);
+                }
+                if (arg instanceof JavaType) {
+                    return mapper.readValue(value, (JavaType) arg);
+                }
+                log.warn("Unsupported type: {}", arg);
             }
-            if (arg instanceof Class) {
-                return mapper.readValue(value, (Class<T>) arg);
-            }
-            if (arg instanceof TypeReference) {
-                return mapper.readValue(value, (TypeReference<T>) arg);
-            }
-            if (arg instanceof JavaType) {
-                return mapper.readValue(value, (JavaType) arg);
-            }
-            log.error("Unsupported type: {}", arg);
+            log.warn("Value is null or empty.");
         } catch (Exception e) {
             log.error("toJavaObject exception: {} - {}", value, arg, e);
         }

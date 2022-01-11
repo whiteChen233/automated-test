@@ -19,15 +19,14 @@ import com.github.white.at.framework.security.service.TokenService;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@Component
+// @Component
 public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
 
     private final JwtProperties jwtProperties;
 
     private final TokenService tokenService;
 
-    public JwtAuthenticationTokenFilter(JwtProperties jwtProperties,
-                                        TokenService tokenService) {
+    public JwtAuthenticationTokenFilter(JwtProperties jwtProperties, TokenService tokenService) {
         this.jwtProperties = jwtProperties;
         this.tokenService = tokenService;
     }

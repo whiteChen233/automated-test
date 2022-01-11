@@ -13,15 +13,15 @@ import com.github.white.at.framework.security.service.TokenService;
 @RestController
 public class CommonController {
 
-    private final TokenService tokenService;
-
-    public CommonController(TokenService tokenService) {
-        this.tokenService = tokenService;
-    }
-
-    @PostMapping("login")
-    public ApiResult login(@RequestBody SysUserVO vo) {
-        String token = tokenService.login(vo.getUsername(), vo.getPassword());
-        return ApiResult.ok(Collections.singletonMap("token", token));
-    }
+    // private final TokenService tokenService;
+    //
+    // public CommonController(TokenService tokenService) {
+    //     this.tokenService = tokenService;
+    // }
+    //
+    // @PostMapping("login")
+    // public ApiResult login(@RequestBody SysUserVO vo) {
+    //     String token = tokenService.login(vo.getUsername(), vo.getPassword());
+    //     return ApiResult.ok(Collections.singletonMap("token", token));
+    // }
 }

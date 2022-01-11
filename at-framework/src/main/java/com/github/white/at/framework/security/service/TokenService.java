@@ -36,7 +36,7 @@ import io.jsonwebtoken.security.SecurityException;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@Component
+// @Component
 public class TokenService implements InitializingBean {
 
     private static final String KEY_AUTHORITIES = "auths";

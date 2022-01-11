@@ -5,4 +5,8 @@ spring:
       url: jdbc:mysql://localhost:3306/practice?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
       username: practice
       password: 3306.Practice
+  flyway:
+    # 是否启用flyway
+    enabled: false
 
+debug: true

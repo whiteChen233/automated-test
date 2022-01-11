@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 
 import com.github.white.at.common.response.ApiResult;
 
-@Component
 public class AccessDeniedHandlerImpl implements AccessDeniedHandler, ResponseData {
 
     @Override

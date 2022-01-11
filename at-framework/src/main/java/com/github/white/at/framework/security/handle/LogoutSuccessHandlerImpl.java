@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
 
 import com.github.white.at.common.response.ApiResult;
 
-@Component
 public class LogoutSuccessHandlerImpl implements LogoutSuccessHandler, ResponseData {
 
     @Override
