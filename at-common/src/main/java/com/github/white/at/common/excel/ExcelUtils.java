@@ -1,21 +1,23 @@
 package com.github.white.at.common.excel;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import org.apache.tomcat.util.http.fileupload.FileItem;
 
 import com.alibaba.excel.EasyExcelFactory;
 import com.alibaba.excel.support.ExcelTypeEnum;
+import com.alibaba.excel.write.builder.ExcelWriterBuilder;
+import com.github.white.at.common.excel.domain.BaseExcel;
+import com.github.white.at.common.excel.domain.ReadExcelData;
+import com.github.white.at.common.excel.domain.WriteExcelData;
 import com.github.white.at.common.excel.linstener.UploadExcelListener;
-
-import cn.hutool.core.util.ClassUtil;
 
 public class ExcelUtils {
 
-    public <E extends BaseExcel> ExcelData<E> upload(FileItem fileItem) {
+    public <E extends BaseExcel> ReadExcelData<E> upload(FileItem fileItem, Class<E> clazz) {
         try {
-            UploadExcelListener<E> listener = new UploadExcelListener<>(fileItem.getName());
-            Class<?> clazz = ClassUtil.getTypeArgument(UploadExcelListener.class);
+            UploadExcelListener<E> listener = new UploadExcelListener<>();
             EasyExcelFactory.read(fileItem.getInputStream(), clazz, listener).sheet().doRead();
             return listener.getExcelData();
         } catch (Exception e) {
@@ -23,10 +25,17 @@ public class ExcelUtils {
         }
     }
 
-    public <E extends BaseExcel> String download(ExcelData<E> excelData) {
+    public String download(WriteExcelData excelData) {
         String fileName = excelData.getExcelName() + "_" + LocalDateTime.now() + ExcelTypeEnum.XLSX.getValue();
-        Class<?> clazz = ClassUtil.getTypeArgument(excelData.getClass());
-        EasyExcelFactory.write(fileName, clazz).registerWriteHandler(excelData.getStyle()).sheet().doWrite(excelData.getCells());
+        ExcelWriterBuilder builder = EasyExcelFactory.write(fileName);
+        List<List<String>> heads = excelData.getHeads();
+        if (heads.isEmpty()) {
+            builder.head(excelData.getExcelClass());
+        } else {
+            builder.head(heads);
+        }
+        excelData.getStyles().forEach(builder::registerWriteHandler);
+        builder.sheet().doWrite(excelData.getContent());
         return fileName;
     }
 }
