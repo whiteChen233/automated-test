@@ -24,7 +24,7 @@
         <selenium.version>4.1.0</selenium.version>
         <jjwt.version>0.11.2</jjwt.version>
         <hutool.version>5.7.18</hutool.version>
-        <guava.version>31.0.1-jre</guava.version>
+        <easyexcel.version>3.0.5</easyexcel.version>
     </properties>
 
     <modules>
@@ -139,15 +139,9 @@
             </dependency>
 
             <dependency>
-                <artifactId>guava</artifactId>
-                <groupId>com.google.guava</groupId>
-                <version>${guava.version}</version>
-            </dependency>
-
-            <dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>easyexcel</artifactId>
-                <version>3.0.5</version>
+                <version>${easyexcel.version}</version>
             </dependency>
 
         </dependencies>
