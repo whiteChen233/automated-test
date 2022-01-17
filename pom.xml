@@ -28,11 +28,7 @@
     </properties>
 
     <modules>
-        <module>at-dao</module>
-        <module>at-api</module>
-        <module>at-framework</module>
-        <module>at-main</module>
-        <module>at-common</module>
+        <module>at-web</module>
     </modules>
 
     <profiles>
