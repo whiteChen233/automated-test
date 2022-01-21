@@ -10,28 +10,29 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
 import com.github.white.at.framework.response.ApiResult;
+import com.github.white.at.utils.JSON;
 
 /**
- * ResponseData: The interface Response data.
+ * RenderResponse: The interface Render Response data.
  *
  * @author White
  * @version 1.0
  * @date 2021/07/13 23:53
  */
-public interface ResponseData extends Serializable {
+public interface RenderResponse extends Serializable {
 
     /**
-     * Response.
+     * render.
      *
      * @param response the response
      * @param result   the result
      */
-    default void response(HttpServletResponse response, ApiResult result) {
+    default void render(HttpServletResponse response, ApiResult result) {
         try {
-            response.setStatus(HttpStatus.OK.value());
-            response.setContentType(MediaType.APPLICATION_JSON.toString());
             response.setCharacterEncoding(StandardCharsets.UTF_8.toString());
-            response.getWriter().print(result.toString());
+            response.setContentType(MediaType.APPLICATION_JSON.toString());
+            response.setStatus(HttpStatus.OK.value());
+            response.getWriter().print(JSON.INSTANCE.toString(result));
         } catch (IOException e) {
             //
         }

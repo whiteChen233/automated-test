@@ -6,11 +6,11 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import org.springframework.security.core.CredentialsContainer;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.github.white.at.framework.enums.AccountEnum;
 
 import lombok.Builder;
@@ -18,12 +18,12 @@ import lombok.Data;
 
 @Builder
 @Data
-public class LoginUser implements UserDetails, CredentialsContainer {
+public class LoginUser implements UserDetails {
 
     private Long userId;
     private String username;
     private String password;
-    private Integer status;
+    private AccountEnum status;
     private List<String> roles;
     private List<String> perms;
 
@@ -34,6 +34,7 @@ public class LoginUser implements UserDetails, CredentialsContainer {
             .orElseGet(ArrayList::new);
     }
 
+    @JsonIgnore
     @Override
     public String getPassword() {
         return password;
@@ -51,21 +52,16 @@ public class LoginUser implements UserDetails, CredentialsContainer {
 
     @Override
     public boolean isAccountNonLocked() {
-        return AccountEnum.LOCKED.getStatus() == status;
+        return !AccountEnum.LOCKED.equals(status);
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return AccountEnum.AVAILABLE.getStatus() == status;
-    }
-
-    @Override
-    public void eraseCredentials() {
-        this.password = null;
+        return AccountEnum.AVAILABLE.equals(status);
     }
 }

@@ -1,15 +1,14 @@
 package com.github.white.at.service.impl;
 
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Service;
 
-import com.github.white.at.service.UserService;
+import com.github.white.at.domain.entity.SysUserDO;
 import com.github.white.at.domain.mapper.SysUserMapper;
 import com.github.white.at.framework.core.domain.LoginUser;
 import com.github.white.at.repository.SysUserRepository;
-import com.github.white.at.domain.entity.SysUserDO;
+import com.github.white.at.service.UserService;
 
-@Service
+// @Service
 public class UserServiceImpl implements UserService {
 
     private final SysUserRepository repository;

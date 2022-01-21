@@ -2,6 +2,8 @@ package com.github.white.at.framework.response;
 
 import java.util.HashMap;
 
+import org.springframework.http.HttpStatus;
+
 /**
  * ApiResult: The type Api result.
  *
@@ -48,23 +50,27 @@ public class ApiResult extends HashMap<String, Object> {
         this(responseCode.getCode(), responseCode.getKey(), data);
     }
 
+    public ApiResult(HttpStatus status, Object data) {
+        this(status.value(), status.getReasonPhrase(), data);
+    }
+
     /**
-     * Ok api result.
+     * Success api result.
      *
      * @param data the data
      * @return the api result
      */
-    public static ApiResult ok(Object data) {
+    public static ApiResult success(Object data) {
         return new ApiResult(ResponseCode.SUCCESS, data);
     }
 
     /**
-     * Ok api result.
+     * Success api result.
      *
      * @return the api result
      */
-    public static ApiResult ok() {
-        return ok(null);
+    public static ApiResult success() {
+        return success(null);
     }
 
     /**

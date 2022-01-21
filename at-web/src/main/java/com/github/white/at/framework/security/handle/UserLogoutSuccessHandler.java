@@ -8,12 +8,12 @@ import org.springframework.security.web.authentication.logout.LogoutSuccessHandl
 
 import com.github.white.at.framework.response.ApiResult;
 
-public class LogoutSuccessHandlerImpl implements LogoutSuccessHandler, ResponseData {
+public class UserLogoutSuccessHandler implements LogoutSuccessHandler, RenderResponse {
 
     @Override
     public void onLogoutSuccess(HttpServletRequest httpServletRequest,
                                 HttpServletResponse httpServletResponse,
                                 Authentication authentication) {
-        response(httpServletResponse, ApiResult.ok());
+        render(httpServletResponse, ApiResult.success());
     }
 }

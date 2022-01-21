@@ -9,12 +9,12 @@ import org.springframework.security.web.access.AccessDeniedHandler;
 
 import com.github.white.at.framework.response.ApiResult;
 
-public class AccessDeniedHandlerImpl implements AccessDeniedHandler, ResponseData {
+public class PermsAccessDeniedHandler implements AccessDeniedHandler, RenderResponse {
 
     @Override
     public void handle(HttpServletRequest httpServletRequest,
                        HttpServletResponse httpServletResponse,
                        AccessDeniedException e) {
-        response(httpServletResponse, ApiResult.error(HttpStatus.FORBIDDEN.value(), "AccessDenied"));
+        render(httpServletResponse, ApiResult.error(HttpStatus.FORBIDDEN.value(), e.getMessage()));
     }
 }
