@@ -8,9 +8,7 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 
 import com.github.white.at.framework.response.ApiResult;
 
-public class AuthenticationEntryPointImpl implements AuthenticationEntryPoint, RenderResponse {
-
-    private static final long serialVersionUID = -1L;
+public class AuthenticationEntryPointHandler implements AuthenticationEntryPoint, RenderResponse {
 
     @Override
     public void commence(HttpServletRequest httpServletRequest,

@@ -2,6 +2,7 @@ package com.github.white.at.framework.config;
 
 import java.util.Collections;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,11 +24,13 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import com.github.white.at.framework.core.domain.LoginUser;
 import com.github.white.at.framework.enums.AccountEnum;
 import com.github.white.at.framework.security.filter.AjaxUsernamePasswordAuthenticationFilter;
-import com.github.white.at.framework.security.handle.AuthenticationEntryPointImpl;
+import com.github.white.at.framework.security.filter.JwtAuthenticationTokenFilter;
+import com.github.white.at.framework.security.handle.AuthenticationEntryPointHandler;
 import com.github.white.at.framework.security.handle.LoginFailureHandler;
 import com.github.white.at.framework.security.handle.LoginSuccessHandler;
 import com.github.white.at.framework.security.handle.PermsAccessDeniedHandler;
 import com.github.white.at.framework.security.handle.UserLogoutSuccessHandler;
+import com.github.white.at.framework.security.service.TokenService;
 
 import cn.hutool.core.map.MapUtil;
 
@@ -35,6 +38,12 @@ import cn.hutool.core.map.MapUtil;
 @EnableWebSecurity
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+    private final TokenService tokenService;
+
+    public SecurityConfig(TokenService tokenService) {
+        this.tokenService = tokenService;
+    }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -46,6 +55,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
             .cors()
             .and()
+            .addFilterBefore(new JwtAuthenticationTokenFilter(tokenService), UsernamePasswordAuthenticationFilter.class)
             .addFilterAt(new AjaxUsernamePasswordAuthenticationFilter(authenticationManagerBean()),
                 UsernamePasswordAuthenticationFilter.class)
             // 默认监听 /login 接口
@@ -60,7 +70,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             // .addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class)
             // 授权异常
             .exceptionHandling()
-            .authenticationEntryPoint(new AuthenticationEntryPointImpl())
+            .authenticationEntryPoint(new AuthenticationEntryPointHandler())
             .accessDeniedHandler(new PermsAccessDeniedHandler())
             .and()
             .headers()
@@ -124,12 +134,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
             @Override
             public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-                return this.users.get(username);
+                return Optional.ofNullable(this.users.get(username)).orElseThrow(() -> new UsernameNotFoundException("can not find user"));
             }
         };
         LoginUser loginUser = LoginUser.builder()
-            .username("user")
-            .password("{noop}12345")
+            .username("white")
+            .password("{noop}Admin.1324")
             .status(AccountEnum.AVAILABLE)
             .roles(Collections.singletonList("user"))
             .perms(Collections.emptyList())

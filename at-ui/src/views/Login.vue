@@ -3,11 +3,11 @@
     <v-main class="bg">
       <v-container class="fill-height">
         <v-row justify="center">
-          <v-spacer />
+          <v-spacer/>
           <v-col cols="5">
             <v-form ref="form">
               <v-card class="px-8 pt-5 pb-3" elevation="5">
-                <v-card-title> Automated Test </v-card-title>
+                <v-card-title> Automated Test</v-card-title>
                 <v-card-text>
                   <v-text-field
                     v-model="login.username"
@@ -23,18 +23,18 @@
                     prepend-inner-icon="mdi-lock"
                     validate-on-blur
                     :rules="[rules.required,rules.password]"
-                    :append-icon="isshow ? 'mdi-eye' : 'mdi-eye-off'"
-                    :type="isshow ? 'text' : 'password'"
-                    @click:append="isshow = !isshow"
+                    :append-icon="showPwd ? 'mdi-eye' : 'mdi-eye-off'"
+                    :type="showPwd ? 'text' : 'password'"
+                    @click:append="showPwd = !showPwd"
                   />
                 </v-card-text>
                 <v-card-actions>
-                  <v-btn block class="blue" @click="doLogin"> 登录 </v-btn>
+                  <v-btn block class="blue" @click="doLogin"> 登录</v-btn>
                 </v-card-actions>
               </v-card>
             </v-form>
           </v-col>
-          <v-spacer />
+          <v-spacer/>
         </v-row>
       </v-container>
     </v-main>
@@ -45,28 +45,22 @@
 export default {
   name: 'Login',
   data: () => ({
-    isshow: false,
+    showPwd: false,
     login: {},
     rules: {
       required: (value) => !!value || '必填项',
       username: (value) => /^\w{5,32}$/.test(value) || '5~32位字母数字下划线组合',
-      password: (value) => /^(?!\d+$)(?![a-z]+$)(?![A-Z]+$)[0-9A-Za-z]{8,32}$/.test(value) || '8~32位字母数字组合'
+      password: (value) => /^([A-Za-z0-9._@]){8,32}$/.test(value) || '8~32位字母数字组合'
     }
   }),
   methods: {
     doLogin () {
-      if (this.$refs.form.validate()) {
-        this.$router.push({ name: 'Home' })
-      }
-      this.$toast('哈哈哈')
-      this.$toast.success('哈哈哈')
-      this.$toast.info('哈哈哈')
-      this.$toast.error('哈哈哈')
-      this.$toast.warning('哈哈哈')
-
-      this.$dialog.alert('这是一个弹框', '标题')
-      this.$dialog.confirm('这是一个弹框', '标题')
-      this.$dialog.prompt('这是一个弹框', '标题')
+      if (!this.$refs.form.validate()) return
+      this.$api.common.login(this.login).then(r => {
+        console.log(r)
+      }).catch(e => {
+        this.$toast.error(e)
+      })
     }
   }
 }

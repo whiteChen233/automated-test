@@ -18,15 +18,11 @@ import com.github.white.at.framework.security.service.TokenService;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-// @Component
 public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
-
-    private final JwtProperties jwtProperties;
 
     private final TokenService tokenService;
 
-    public JwtAuthenticationTokenFilter(JwtProperties jwtProperties, TokenService tokenService) {
-        this.jwtProperties = jwtProperties;
+    public JwtAuthenticationTokenFilter(TokenService tokenService) {
         this.tokenService = tokenService;
     }
 
@@ -34,6 +30,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest httpServletRequest,
                                     HttpServletResponse httpServletResponse,
                                     FilterChain filterChain) throws ServletException, IOException {
+        JwtProperties jwtProperties = tokenService.getJwtProperties();
         String requestRri = httpServletRequest.getRequestURI();
         // 获取request token
         String token = null;

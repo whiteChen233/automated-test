@@ -9,16 +9,16 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.stereotype.Component;
 
-import com.github.white.at.framework.exception.BaseException;
-import com.github.white.at.framework.response.ResponseCode;
 import com.github.white.at.framework.config.properties.JwtProperties;
 import com.github.white.at.framework.core.domain.LoginUser;
+import com.github.white.at.framework.exception.BaseException;
+import com.github.white.at.framework.response.ResponseCode;
 
 import cn.hutool.core.map.MapUtil;
 import io.jsonwebtoken.Claims;
@@ -32,35 +32,28 @@ import io.jsonwebtoken.UnsupportedJwtException;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SecurityException;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-// @Component
+@Component
 public class TokenService implements InitializingBean {
 
     private static final String KEY_AUTHORITIES = "auths";
 
+    @Getter
     private final JwtProperties jwtProperties;
-
-    private final AuthenticationManager authenticationManager;
 
     private Key key;
 
-    public TokenService(JwtProperties jwtProperties, AuthenticationManager authenticationManager) {
+    public TokenService(JwtProperties jwtProperties) {
         this.jwtProperties = jwtProperties;
-        this.authenticationManager = authenticationManager;
     }
 
     @Override
     public void afterPropertiesSet() {
         byte[] keyBytes = Decoders.BASE64.decode(jwtProperties.getBase64Secret());
         this.key = Keys.hmacShaKeyFor(keyBytes);
-    }
-
-    public String login(String username, String password) {
-        Authentication authentication = authenticationManager
-            .authenticate(new UsernamePasswordAuthenticationToken(username, password));
-        return createToken((LoginUser) authentication.getPrincipal());
     }
 
     public String createToken(LoginUser loginUser) {
