@@ -8,28 +8,35 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.white.at.framework.core.domain.LoginUser;
+import com.github.white.at.framework.security.service.TokenService;
 
 import cn.hutool.extra.spring.SpringUtil;
 
-public class AjaxUsernamePasswordAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
+public class CustomUsernamePasswordAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     private Map<String, String> param;
 
-    public AjaxUsernamePasswordAuthenticationFilter(AuthenticationManager authenticationManager) {
-        super(authenticationManager);
+    private final TokenService tokenService;
+
+    public CustomUsernamePasswordAuthenticationFilter(TokenService tokenService) {
+        this.tokenService = tokenService;
     }
 
     @Override
-    public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
+    public Authentication attemptAuthentication(HttpServletRequest request,
+                                                HttpServletResponse response) throws AuthenticationException {
         process(request);
-        return super.attemptAuthentication(request, response);
+        Authentication authentication = super.attemptAuthentication(request, response);
+        LoginUser loginUser = (LoginUser) authentication.getPrincipal();
+        tokenService.createToken(loginUser);
+        return authentication;
     }
 
     @Override
@@ -44,9 +51,8 @@ public class AjaxUsernamePasswordAuthenticationFilter extends UsernamePasswordAu
 
     private void process(HttpServletRequest request) {
         try (InputStream is = request.getInputStream()) {
-            param = SpringUtil.getBean(ObjectMapper.class)
-                .readValue(is, new TypeReference<HashMap<String, String>>() {
-                });
+            param = SpringUtil.getBean(ObjectMapper.class).readValue(is, new TypeReference<HashMap<String, String>>() {
+            });
         } catch (IOException e) {
             // log
         }

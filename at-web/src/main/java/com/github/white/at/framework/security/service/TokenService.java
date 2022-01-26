@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Map;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.InitializingBean;
@@ -19,8 +18,11 @@ import com.github.white.at.framework.config.properties.JwtProperties;
 import com.github.white.at.framework.core.domain.LoginUser;
 import com.github.white.at.framework.exception.BaseException;
 import com.github.white.at.framework.response.ResponseCode;
+import com.github.white.at.utils.RedisUtil;
 
 import cn.hutool.core.map.MapUtil;
+import cn.hutool.core.util.IdUtil;
+import cn.hutool.extra.spring.SpringUtil;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.CompressionCodecs;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -56,35 +58,37 @@ public class TokenService implements InitializingBean {
         this.key = Keys.hmacShaKeyFor(keyBytes);
     }
 
-    public String createToken(LoginUser loginUser) {
+    public void createToken(LoginUser loginUser) {
+        String uuid = IdUtil.randomUUID();
+        loginUser.setUuid(uuid);
         Map<String, Object> claims = MapUtil.newHashMap();
-        claims.put("id", loginUser.getUserId());
+        claims.put("id", uuid);
         claims.put("username", loginUser.getUsername());
         claims.put(KEY_AUTHORITIES, loginUser.getAuthorities());
-        return Jwts.builder()
+        String token = jwtProperties.getTokenPrefix() + Jwts.builder()
             .addClaims(claims)
-            .setId(UUID.randomUUID().toString())
+            .setId(uuid)
             .setIssuedAt(new Date())
             .compressWith(CompressionCodecs.DEFLATE)
             .signWith(key, SignatureAlgorithm.HS512)
             .compact();
+        loginUser.setToken(token);
+        SpringUtil.getBean(RedisUtil.class).ops4Value().set(uuid, loginUser);
     }
 
     public Authentication getAuthentication(String token) {
         Claims claims = getClaimsFromToken(token).getBody();
-
         Collection<? extends GrantedAuthority> authorities =
             Arrays.stream(claims.get(KEY_AUTHORITIES).toString().split(","))
             .map(SimpleGrantedAuthority::new)
             .collect(Collectors.toList());
-
         LoginUser principal = LoginUser.builder().build();
         return new UsernamePasswordAuthenticationToken(principal, token, authorities);
     }
 
-    public boolean validateToken(String authToken) {
+    public boolean validateToken(String token) {
         try {
-            getClaimsFromToken(authToken);
+            getClaimsFromToken(token);
             return true;
         } catch (SecurityException | MalformedJwtException e) {
             log.info("Invalid JWT signature.");

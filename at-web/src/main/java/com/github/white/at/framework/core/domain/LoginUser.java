@@ -20,6 +20,9 @@ import lombok.Data;
 @Data
 public class LoginUser implements UserDetails {
 
+    private String uuid;
+    @JsonIgnore
+    private String token;
     private Long userId;
     private String username;
     private String password;

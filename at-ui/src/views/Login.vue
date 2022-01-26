@@ -10,7 +10,7 @@
                 <v-card-title> Automated Test</v-card-title>
                 <v-card-text>
                   <v-text-field
-                    v-model="login.username"
+                    v-model="loginBody.username"
                     type="text"
                     label="用户名"
                     prepend-inner-icon="mdi-account"
@@ -18,7 +18,7 @@
                     :rules="[rules.required,rules.username]"
                   />
                   <v-text-field
-                    v-model="login.password"
+                    v-model="loginBody.password"
                     label="密码"
                     prepend-inner-icon="mdi-lock"
                     validate-on-blur
@@ -29,7 +29,7 @@
                   />
                 </v-card-text>
                 <v-card-actions>
-                  <v-btn block class="blue" @click="doLogin"> 登录</v-btn>
+                  <v-btn block class="blue" @click="doLogin">登录</v-btn>
                 </v-card-actions>
               </v-card>
             </v-form>
@@ -42,11 +42,12 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 export default {
   name: 'Login',
   data: () => ({
     showPwd: false,
-    login: {},
+    loginBody: {},
     rules: {
       required: (value) => !!value || '必填项',
       username: (value) => /^\w{5,32}$/.test(value) || '5~32位字母数字下划线组合',
@@ -54,10 +55,13 @@ export default {
     }
   }),
   methods: {
+    ...mapActions({
+      login: 'user/login'
+    }),
     doLogin () {
       if (!this.$refs.form.validate()) return
-      this.$api.common.login(this.login).then(r => {
-        console.log(r)
+      this.login(this.loginBody).then(r => {
+        this.$router.push('/')
       }).catch(e => {
         this.$toast.error(e)
       })

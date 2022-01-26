@@ -49,7 +49,7 @@ export default {
   },
   methods: {
     ...mapMutations({
-      setDrawer: 'SET_DRAWER'
+      setDrawer: 'setDrawer'
     }),
     add (route) {
       const idx = this.tabs.map(i => i.path).indexOf(route.path)
