@@ -29,7 +29,6 @@ import com.github.white.at.framework.security.handle.AuthenticationEntryPointHan
 import com.github.white.at.framework.security.handle.LoginFailureHandler;
 import com.github.white.at.framework.security.handle.LoginSuccessHandler;
 import com.github.white.at.framework.security.handle.PermsAccessDeniedHandler;
-import com.github.white.at.framework.security.handle.UserLogoutHandler;
 import com.github.white.at.framework.security.handle.UserLogoutSuccessHandler;
 import com.github.white.at.framework.security.service.TokenService;
 import com.github.white.at.framework.web.LoginUser;
@@ -69,7 +68,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // .failureHandler(new LoginFailureHandler())
             )
             .logout(c -> c
-                .addLogoutHandler(new UserLogoutHandler())
                 .logoutSuccessHandler(new UserLogoutSuccessHandler())
             )
             // 授权异常
