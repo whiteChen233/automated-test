@@ -1,18 +1,15 @@
 package com.github.white.at.web;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+
+import com.github.white.at.framework.web.ApiResult;
 
 @Controller
 public class CommonController {
 
-    // private final TokenService tokenService;
-    //
-    // public CommonController(TokenService tokenService) {
-    //     this.tokenService = tokenService;
-    // }
-
-    // @PostMapping("login")
-    // public String login(@RequestBody SysUserVO vo) {
-    //     return "security_login";
-    // }
+    @GetMapping("test")
+    public ApiResult login() {
+        return ApiResult.success("Hello world!");
+    }
 }

@@ -61,6 +61,7 @@ export default {
     doLogin () {
       if (!this.$refs.form.validate()) return
       this.login(this.loginBody).then(r => {
+        console.log(r)
         this.$router.push('/')
       }).catch(e => {
         this.$toast.error(e)

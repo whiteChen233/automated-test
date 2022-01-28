@@ -1,4 +1,4 @@
-package com.github.white.at.framework.enums;
+package com.github.white.at.framework.basic.enums;
 
 import lombok.Getter;
 

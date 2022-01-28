@@ -14,7 +14,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.white.at.framework.core.domain.LoginUser;
+import com.github.white.at.framework.web.LoginUser;
 import com.github.white.at.framework.security.service.TokenService;
 
 import cn.hutool.extra.spring.SpringUtil;

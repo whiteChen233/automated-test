@@ -115,10 +115,11 @@ spring:
     port: 6379
     password: redis@127
 
-#jwt
-jwt:
-  header: Authorization
-  # 令牌前缀
-  token-prefix: Bearer
-  # 使用Base64对该令牌进行编码
-  base64-secret: a2pha3Y4MGs5NXZ1ajhjaG1lZjlxZjhwZ3k1ZGk2Mmhuc3ppZnRra3A4NWszeDlmeXgybXE4bGh1czZmZHNyZ2xnbXd2czFkM3RxeG5ja3l5MXFyOWFpNg=
+# 自定义的一些配置项
+app:
+  jwt:
+    header: Authorization
+    # 令牌前缀
+    token-prefix: Bearer
+    # 使用Base64对该令牌进行编码
+    base64-secret: a2pha3Y4MGs5NXZ1ajhjaG1lZjlxZjhwZ3k1ZGk2Mmhuc3ppZnRra3A4NWszeDlmeXgybXE4bGh1czZmZHNyZ2xnbXd2czFkM3RxeG5ja3l5MXFyOWFpNg=

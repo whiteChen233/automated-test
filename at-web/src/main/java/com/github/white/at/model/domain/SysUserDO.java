@@ -1,4 +1,4 @@
-package com.github.white.at.domain.entity;
+package com.github.white.at.model.domain;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;

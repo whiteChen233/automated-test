@@ -1,17 +1,23 @@
-import { login } from '@/api/user'
+import { login, logout } from '@/api/user'
 
 export default {
   namespaced: true,
   state: {
-    token: null
+    token: undefined,
+    info: {}
   },
   mutations: {
     setToken: (state, payload) => {
       state.token = payload
       sessionStorage.setItem('token', payload)
     },
-    delToken: (state) => {
-      state.token = null
+    setInfo: (state, payload) => {
+      state.info = payload
+    },
+    resetInfo: (state) => {
+      state.token = undefined
+      state.info = { ...defaultInfo }
+      sessionStorage.removeItem('token')
     }
   },
   actions: {
@@ -21,13 +27,34 @@ export default {
           if (r.code === 0) {
             const { token } = r.data
             commit('setToken', token)
+            resolve(r)
+          } else {
+            reject(r)
           }
-          resolve(r)
+        }).catch(e => reject(e))
+      })
+    },
+    logout ({ commit }) {
+      return new Promise((resolve, reject) => {
+        logout().then(r => {
+          if (r.code === 0) {
+            commit('resetInfo')
+            resolve(r)
+          } else {
+            reject(r)
+          }
         }).catch(e => reject(e))
       })
     }
   },
-  getters: {
+  getters: {}
+}
 
-  }
+const defaultInfo = {
+  username: undefined,
+  nickname: undefined,
+  avatar: undefined,
+  roles: [],
+  permissions: [],
+  session: undefined
 }

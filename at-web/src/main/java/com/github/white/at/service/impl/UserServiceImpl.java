@@ -2,9 +2,9 @@ package com.github.white.at.service.impl;
 
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.github.white.at.domain.entity.SysUserDO;
-import com.github.white.at.domain.mapper.SysUserMapper;
-import com.github.white.at.framework.core.domain.LoginUser;
+import com.github.white.at.model.domain.SysUserDO;
+import com.github.white.at.model.mapper.SysUserMapper;
+import com.github.white.at.framework.web.LoginUser;
 import com.github.white.at.repository.SysUserRepository;
 import com.github.white.at.service.UserService;
 

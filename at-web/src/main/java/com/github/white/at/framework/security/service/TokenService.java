@@ -1,6 +1,7 @@
 package com.github.white.at.framework.security.service;
 
 import java.security.Key;
+import java.time.Duration;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
@@ -14,10 +15,11 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 
+import com.github.white.at.framework.basic.constants.Consts;
 import com.github.white.at.framework.config.properties.JwtProperties;
-import com.github.white.at.framework.core.domain.LoginUser;
+import com.github.white.at.framework.web.LoginUser;
 import com.github.white.at.framework.exception.BaseException;
-import com.github.white.at.framework.response.ResponseCode;
+import com.github.white.at.framework.web.ResponseCode;
 import com.github.white.at.utils.RedisUtil;
 
 import cn.hutool.core.map.MapUtil;
@@ -73,13 +75,13 @@ public class TokenService implements InitializingBean {
             .signWith(key, SignatureAlgorithm.HS512)
             .compact();
         loginUser.setToken(token);
-        SpringUtil.getBean(RedisUtil.class).ops4Value().set(uuid, loginUser);
+        SpringUtil.getBean(RedisUtil.class).ops4Value().set(uuid, loginUser, Duration.ofMillis(30));
     }
 
     public Authentication getAuthentication(String token) {
         Claims claims = getClaimsFromToken(token).getBody();
         Collection<? extends GrantedAuthority> authorities =
-            Arrays.stream(claims.get(KEY_AUTHORITIES).toString().split(","))
+            Arrays.stream(claims.get(KEY_AUTHORITIES).toString().split(Consts.COMMA))
             .map(SimpleGrantedAuthority::new)
             .collect(Collectors.toList());
         LoginUser principal = LoginUser.builder().build();

@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 
-import com.github.white.at.framework.response.ApiResult;
+import com.github.white.at.framework.web.ApiResult;
 
 public class AuthenticationEntryPointHandler implements AuthenticationEntryPoint, RenderResponse {
 

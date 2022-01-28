@@ -1,4 +1,4 @@
-package com.github.white.at.framework.core.domain;
+package com.github.white.at.framework.web;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -11,7 +11,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.github.white.at.framework.enums.AccountEnum;
+import com.github.white.at.framework.basic.enums.AccountEnum;
 
 import lombok.Builder;
 import lombok.Data;

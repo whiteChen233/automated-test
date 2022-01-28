@@ -1,4 +1,4 @@
-package com.github.white.at.domain.view;
+package com.github.white.at.model.view;
 
 import lombok.Data;
 

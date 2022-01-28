@@ -1,4 +1,4 @@
-package com.github.white.at.framework.response;
+package com.github.white.at.framework.web;
 
 import java.util.HashMap;
 

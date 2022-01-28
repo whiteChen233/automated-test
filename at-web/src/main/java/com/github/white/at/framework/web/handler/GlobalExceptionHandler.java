@@ -1,4 +1,4 @@
-package com.github.white.at.framework.exception.handler;
+package com.github.white.at.framework.web.handler;
 
 import java.util.List;
 
@@ -13,8 +13,8 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import com.github.white.at.framework.response.ApiResult;
-import com.github.white.at.framework.response.ResponseCode;
+import com.github.white.at.framework.web.ApiResult;
+import com.github.white.at.framework.web.ResponseCode;
 
 import lombok.extern.slf4j.Slf4j;
 

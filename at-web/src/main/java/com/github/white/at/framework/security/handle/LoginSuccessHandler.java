@@ -8,8 +8,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
-import com.github.white.at.framework.core.domain.LoginUser;
-import com.github.white.at.framework.response.ApiResult;
+import com.github.white.at.framework.web.LoginUser;
+import com.github.white.at.framework.web.ApiResult;
 
 public class LoginSuccessHandler implements AuthenticationSuccessHandler, RenderResponse {
 

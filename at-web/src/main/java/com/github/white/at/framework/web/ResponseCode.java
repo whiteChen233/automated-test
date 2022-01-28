@@ -1,4 +1,4 @@
-package com.github.white.at.framework.response;
+package com.github.white.at.framework.web;
 
 import lombok.Getter;
 

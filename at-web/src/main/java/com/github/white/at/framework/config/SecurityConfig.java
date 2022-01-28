@@ -22,16 +22,17 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import com.github.white.at.framework.core.domain.LoginUser;
-import com.github.white.at.framework.enums.AccountEnum;
+import com.github.white.at.framework.basic.enums.AccountEnum;
 import com.github.white.at.framework.security.filter.CustomUsernamePasswordAuthenticationFilter;
 import com.github.white.at.framework.security.filter.JwtAuthenticationTokenFilter;
 import com.github.white.at.framework.security.handle.AuthenticationEntryPointHandler;
 import com.github.white.at.framework.security.handle.LoginFailureHandler;
 import com.github.white.at.framework.security.handle.LoginSuccessHandler;
 import com.github.white.at.framework.security.handle.PermsAccessDeniedHandler;
+import com.github.white.at.framework.security.handle.UserLogoutHandler;
 import com.github.white.at.framework.security.handle.UserLogoutSuccessHandler;
 import com.github.white.at.framework.security.service.TokenService;
+import com.github.white.at.framework.web.LoginUser;
 
 import cn.hutool.core.map.MapUtil;
 
@@ -67,7 +68,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // .successHandler(new LoginSuccessHandler())
                 // .failureHandler(new LoginFailureHandler())
             )
-            .logout(c -> c.logoutSuccessHandler(new UserLogoutSuccessHandler()))
+            .logout(c -> c
+                .addLogoutHandler(new UserLogoutHandler())
+                .logoutSuccessHandler(new UserLogoutSuccessHandler())
+            )
             // 授权异常
             .exceptionHandling(c -> c
                 .authenticationEntryPoint(new AuthenticationEntryPointHandler())
@@ -157,7 +161,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public CustomUsernamePasswordAuthenticationFilter customUsernamePasswordAuthenticationFilter() throws Exception {
-        CustomUsernamePasswordAuthenticationFilter filter = new CustomUsernamePasswordAuthenticationFilter(tokenService);
+        CustomUsernamePasswordAuthenticationFilter filter =
+            new CustomUsernamePasswordAuthenticationFilter(tokenService);
         filter.setAuthenticationManager(authenticationManager());
         filter.setAuthenticationSuccessHandler(new LoginSuccessHandler());
         filter.setAuthenticationFailureHandler(new LoginFailureHandler());
